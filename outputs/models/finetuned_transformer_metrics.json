@@ -1,33 +1,33 @@
 {
-  "model_name": "Fine-tuned hing-roberta + PCA-40 + LR",
-  "pca_dimensions": 40,
+  "model_name": "Fine-tuned hing-roberta + PCA-30 + LR",
+  "pca_dimensions": 30,
   "thresholds": {
-    "tau_review": 0.0423,
-    "tau_alert": 0.0529,
-    "tau_velocity": 0.2525
+    "tau_review": 0.0593,
+    "tau_alert": 0.0741,
+    "tau_velocity": 0.2396
   },
   "chunk_level": {
-    "chunk_f1": 0.8611,
-    "chunk_precision": 0.8599,
-    "chunk_recall": 0.8623,
-    "chunk_fpr": 0.2503,
-    "chunk_roc_auc": 0.9033,
-    "chunk_pr_auc": 0.9503
+    "chunk_f1": 0.8682,
+    "chunk_precision": 0.8752,
+    "chunk_recall": 0.8613,
+    "chunk_fpr": 0.2187,
+    "chunk_roc_auc": 0.908,
+    "chunk_pr_auc": 0.9534
   },
   "call_level": {
-    "call_f1": 0.9658,
-    "call_precision": 0.9899,
-    "call_recall": 0.9429,
-    "call_fpr": 0.8776,
-    "call_roc_auc": 0.7817,
-    "call_pr_auc": 0.997,
-    "median_ttd_seconds": 51.0
+    "call_f1": 0.9692,
+    "call_precision": 0.9904,
+    "call_recall": 0.949,
+    "call_fpr": 0.8367,
+    "call_roc_auc": 0.7939,
+    "call_pr_auc": 0.9972,
+    "median_ttd_seconds": 48.0
   },
   "extra": {
-    "val_f1_at_tau_alert": 0.8643,
+    "val_f1_at_tau_alert": 0.8854,
     "test_legit_calls": 49.0,
     "test_fraud_calls": 4450.0,
-    "fraud_calls_alerted_pct": 94.2921,
+    "fraud_calls_alerted_pct": 94.8989,
     "median_alert_lead_before_label_flip_sec": 0.0
   }
 }

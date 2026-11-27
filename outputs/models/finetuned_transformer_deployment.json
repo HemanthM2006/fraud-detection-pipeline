@@ -1,0 +1,134 @@
+{
+  "policy": {
+    "alpha": 0.6,
+    "k": 1,
+    "tau_alert": 0.0695476402273725,
+    "tau_review": 0.011105030836544426,
+    "target_legit_false_alarm": 0.1,
+    "review_legit_rate": 0.3,
+    "selected_on": "validation"
+  },
+  "deployment": {
+    "validation": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.0995,
+      "legit_false_alarm_ci95": [
+        0.083,
+        0.1189
+      ],
+      "scam_detection_rate": 0.9647,
+      "scam_detection_ci95": [
+        0.9589,
+        0.9698
+      ],
+      "call_precision": 0.9757,
+      "call_f1": 0.9702,
+      "median_time_to_alert_sec": 42.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.2902
+    },
+    "test": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.0837,
+      "legit_false_alarm_ci95": [
+        0.0686,
+        0.1018
+      ],
+      "scam_detection_rate": 0.9499,
+      "scam_detection_ci95": [
+        0.9431,
+        0.9559
+      ],
+      "call_precision": 0.9792,
+      "call_f1": 0.9643,
+      "median_time_to_alert_sec": 42.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.3395
+    },
+    "cross_domain_unseen_scams": {
+      "legit_calls": 51,
+      "scam_calls": 949,
+      "legit_false_alarm_rate": 0.6275,
+      "legit_false_alarm_ci95": [
+        0.4902,
+        0.7468
+      ],
+      "scam_detection_rate": 0.8767,
+      "scam_detection_ci95": [
+        0.8543,
+        0.8961
+      ],
+      "call_precision": 0.963,
+      "call_f1": 0.9178,
+      "median_time_to_alert_sec": 51.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.2921
+    },
+    "test_asr_noise": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.133,
+      "legit_false_alarm_ci95": [
+        0.114,
+        0.1546
+      ],
+      "scam_detection_rate": 0.9798,
+      "scam_detection_ci95": [
+        0.9752,
+        0.9835
+      ],
+      "call_precision": 0.9682,
+      "call_f1": 0.974,
+      "median_time_to_alert_sec": 39.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.4266
+    },
+    "test_naive_single_chunk_0.5": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.0372,
+      "legit_false_alarm_ci95": [
+        0.0274,
+        0.0503
+      ],
+      "scam_detection_rate": 0.8276,
+      "scam_detection_ci95": [
+        0.8163,
+        0.8385
+      ],
+      "call_precision": 0.9893,
+      "call_f1": 0.9013,
+      "median_time_to_alert_sec": 51.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.1127
+    },
+    "test_stricter_5pct_policy": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.0363,
+      "legit_false_alarm_ci95": [
+        0.0267,
+        0.0492
+      ],
+      "scam_detection_rate": 0.7915,
+      "scam_detection_ci95": [
+        0.7793,
+        0.8031
+      ],
+      "call_precision": 0.989,
+      "call_f1": 0.8793,
+      "median_time_to_alert_sec": 54.0,
+      "median_alert_lead_vs_label_flip_sec": -3.0,
+      "share_alerts_before_label_flip": 0.0866
+    }
+  },
+  "calibration": {
+    "test_chunk_ece": 0.1375,
+    "test_chunk_brier": 0.1357,
+    "test_chunk_roc_auc_all": 0.9332,
+    "test_noisy_chunk_roc_auc_all": 0.9286,
+    "cross_domain_chunk_roc_auc": 0.8601
+  }
+}

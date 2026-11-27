@@ -1,16 +1,25 @@
 {
-  "model_name": "Fine-tuned hing-roberta + PCA-40 + LR",
+  "model_name": "Fine-tuned hing-roberta + PCA-30 + LR",
   "backbone": "l3cube-pune/hing-roberta",
   "weights_dir": "outputs/models/finetuned_transformer",
   "max_len": 512,
   "head_tokens": 128,
-  "thresholds": {
-    "tau_review": 0.042299020788088726,
-    "tau_alert": 0.05287377598511091,
-    "tau_velocity": 0.25253095688093086,
-    "val_f1": 0.8642767889863698
+  "alert_policy": {
+    "alpha": 0.6,
+    "k": 1,
+    "tau_alert": 0.0695476402273725,
+    "tau_review": 0.011105030836544426,
+    "target_legit_false_alarm": 0.1,
+    "review_legit_rate": 0.3,
+    "selected_on": "validation"
   },
-  "pca_components": 40,
+  "team_protocol_thresholds": {
+    "tau_review": 0.05930751105885473,
+    "tau_alert": 0.0741343888235684,
+    "tau_velocity": 0.2396027462230578,
+    "val_f1": 0.8853527456210661
+  },
+  "pca_components": 30,
   "n_raw_features": 797,
   "bakeoff": [
     {
@@ -35,35 +44,171 @@
   "pca_grid": [
     {
       "n_components": 10,
-      "explained_var": 0.8075855374336243,
-      "val_roc_auc": 0.8827610756054858
+      "explained_var": 0.8285627365112305,
+      "val_roc_auc": 0.9136791221338276
     },
     {
       "n_components": 20,
-      "explained_var": 0.8549829721450806,
-      "val_roc_auc": 0.8861486972901216
+      "explained_var": 0.8735361695289612,
+      "val_roc_auc": 0.9230074526443368
     },
     {
       "n_components": 30,
-      "explained_var": 0.8824092745780945,
-      "val_roc_auc": 0.890131594432112
+      "explained_var": 0.8976128101348877,
+      "val_roc_auc": 0.9327715430901748
     },
     {
       "n_components": 40,
-      "explained_var": 0.9012754559516907,
-      "val_roc_auc": 0.8933600959654077
+      "explained_var": 0.9144899845123291,
+      "val_roc_auc": 0.9308486208855521
     },
     {
       "n_components": 50,
-      "explained_var": 0.9164196848869324,
-      "val_roc_auc": 0.8908760182388652
+      "explained_var": 0.928146481513977,
+      "val_roc_auc": 0.9311255116641202
     }
   ],
   "training": {
     "world_size": 2,
-    "train_runtime_sec": 4488.505,
-    "global_step": 8000,
-    "best_metric": 0.9432433358080996
+    "train_runtime_sec": 4081.1835,
+    "global_step": 9000,
+    "best_metric": 0.9630118488764559
+  },
+  "training_recipe": {
+    "lr": 1e-05,
+    "label_smoothing": 0.1,
+    "epochs": 1,
+    "eval_steps": 500,
+    "patience": 6,
+    "train_chunks": 204563,
+    "asr_noise_fraction": 0.3
+  },
+  "splits": {
+    "held_out_legit_val_calls": 1026,
+    "held_out_legit_test_calls": 1026
+  },
+  "deployment": {
+    "validation": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.0995,
+      "legit_false_alarm_ci95": [
+        0.083,
+        0.1189
+      ],
+      "scam_detection_rate": 0.9647,
+      "scam_detection_ci95": [
+        0.9589,
+        0.9698
+      ],
+      "call_precision": 0.9757,
+      "call_f1": 0.9702,
+      "median_time_to_alert_sec": 42.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.2902
+    },
+    "test": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.0837,
+      "legit_false_alarm_ci95": [
+        0.0686,
+        0.1018
+      ],
+      "scam_detection_rate": 0.9499,
+      "scam_detection_ci95": [
+        0.9431,
+        0.9559
+      ],
+      "call_precision": 0.9792,
+      "call_f1": 0.9643,
+      "median_time_to_alert_sec": 42.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.3395
+    },
+    "cross_domain_unseen_scams": {
+      "legit_calls": 51,
+      "scam_calls": 949,
+      "legit_false_alarm_rate": 0.6275,
+      "legit_false_alarm_ci95": [
+        0.4902,
+        0.7468
+      ],
+      "scam_detection_rate": 0.8767,
+      "scam_detection_ci95": [
+        0.8543,
+        0.8961
+      ],
+      "call_precision": 0.963,
+      "call_f1": 0.9178,
+      "median_time_to_alert_sec": 51.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.2921
+    },
+    "test_asr_noise": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.133,
+      "legit_false_alarm_ci95": [
+        0.114,
+        0.1546
+      ],
+      "scam_detection_rate": 0.9798,
+      "scam_detection_ci95": [
+        0.9752,
+        0.9835
+      ],
+      "call_precision": 0.9682,
+      "call_f1": 0.974,
+      "median_time_to_alert_sec": 39.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.4266
+    },
+    "test_naive_single_chunk_0.5": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.0372,
+      "legit_false_alarm_ci95": [
+        0.0274,
+        0.0503
+      ],
+      "scam_detection_rate": 0.8276,
+      "scam_detection_ci95": [
+        0.8163,
+        0.8385
+      ],
+      "call_precision": 0.9893,
+      "call_f1": 0.9013,
+      "median_time_to_alert_sec": 51.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.1127
+    },
+    "test_stricter_5pct_policy": {
+      "legit_calls": 1075,
+      "scam_calls": 4450,
+      "legit_false_alarm_rate": 0.0363,
+      "legit_false_alarm_ci95": [
+        0.0267,
+        0.0492
+      ],
+      "scam_detection_rate": 0.7915,
+      "scam_detection_ci95": [
+        0.7793,
+        0.8031
+      ],
+      "call_precision": 0.989,
+      "call_f1": 0.8793,
+      "median_time_to_alert_sec": 54.0,
+      "median_alert_lead_vs_label_flip_sec": -3.0,
+      "share_alerts_before_label_flip": 0.0866
+    }
+  },
+  "calibration": {
+    "test_chunk_ece": 0.1375,
+    "test_chunk_brier": 0.1357,
+    "test_chunk_roc_auc_all": 0.9332,
+    "test_noisy_chunk_roc_auc_all": 0.9286,
+    "cross_domain_chunk_roc_auc": 0.8601
   },
   "inputs": [
     "cumulative_text",
@@ -72,5 +217,11 @@
   ],
   "label": "per-chunk final_verdict (YES=1)",
   "random_seed": 42,
-  "smoke": false
+  "smoke": false,
+  "latency": {
+    "device": "cuda:0",
+    "p50_ms": 11.6,
+    "p95_ms": 12.7,
+    "cpu_p50_ms": 88.1
+  }
 }
