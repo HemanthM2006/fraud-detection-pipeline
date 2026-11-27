@@ -1,69 +1,69 @@
 {
-  "model_name": "Fine-tuned hing-roberta + PCA-10 + LR",
+  "model_name": "Fine-tuned hing-roberta + PCA-40 + LR",
   "backbone": "l3cube-pune/hing-roberta",
   "weights_dir": "outputs/models/finetuned_transformer",
   "max_len": 512,
   "head_tokens": 128,
   "thresholds": {
-    "tau_review": 0.03031709775482061,
-    "tau_alert": 0.03789637219352576,
-    "tau_velocity": 0.22623490583403635,
-    "val_f1": 0.8774490810155158
+    "tau_review": 0.042299020788088726,
+    "tau_alert": 0.05287377598511091,
+    "tau_velocity": 0.25253095688093086,
+    "val_f1": 0.8642767889863698
   },
-  "pca_components": 10,
+  "pca_components": 40,
   "n_raw_features": 797,
   "bakeoff": [
     {
       "model": "l3cube-pune/hing-roberta",
-      "val_roc_auc": 0.8911123928610222,
-      "val_f1": 0.832168790245239,
+      "val_roc_auc": 0.8911,
+      "val_f1": 0.8322,
       "minutes": 11.6
     },
     {
       "model": "FacebookAI/xlm-roberta-base",
-      "val_roc_auc": 0.8628738555123425,
-      "val_f1": 0.8122594832325454,
+      "val_roc_auc": 0.8629,
+      "val_f1": 0.8123,
       "minutes": 11.6
     },
     {
       "model": "google/muril-base-cased",
-      "val_roc_auc": 0.84453923489371,
-      "val_f1": 0.7613222659094219,
+      "val_roc_auc": 0.8445,
+      "val_f1": 0.7613,
       "minutes": 10.2
     }
   ],
   "pca_grid": [
     {
       "n_components": 10,
-      "explained_var": 0.7995939254760742,
-      "val_roc_auc": 0.8914320440686898
+      "explained_var": 0.8075855374336243,
+      "val_roc_auc": 0.8827610756054858
     },
     {
       "n_components": 20,
-      "explained_var": 0.8465746641159058,
-      "val_roc_auc": 0.8821071271833671
+      "explained_var": 0.8549829721450806,
+      "val_roc_auc": 0.8861486972901216
     },
     {
       "n_components": 30,
-      "explained_var": 0.8734487295150757,
-      "val_roc_auc": 0.8856315144595277
+      "explained_var": 0.8824092745780945,
+      "val_roc_auc": 0.890131594432112
     },
     {
       "n_components": 40,
-      "explained_var": 0.8928511738777161,
-      "val_roc_auc": 0.882415662212344
+      "explained_var": 0.9012754559516907,
+      "val_roc_auc": 0.8933600959654077
     },
     {
       "n_components": 50,
-      "explained_var": 0.908328652381897,
-      "val_roc_auc": 0.8816533644015622
+      "explained_var": 0.9164196848869324,
+      "val_roc_auc": 0.8908760182388652
     }
   ],
   "training": {
     "world_size": 2,
-    "train_runtime_sec": 3885.6466,
+    "train_runtime_sec": 4488.505,
     "global_step": 8000,
-    "best_metric": 0.9013138479865028
+    "best_metric": 0.9432433358080996
   },
   "inputs": [
     "cumulative_text",
