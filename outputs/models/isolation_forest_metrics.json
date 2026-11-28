@@ -1,0 +1,26 @@
+{
+  "model_name": "Isolation Forest",
+  "pca_dimensions": 40,
+  "thresholds": {
+    "tau_review": 0.0022,
+    "tau_alert": 0.0027,
+    "tau_velocity": 0.1467
+  },
+  "chunk_level": {
+    "chunk_f1": 0.771,
+    "chunk_precision": 0.6431,
+    "chunk_recall": 0.9624,
+    "chunk_fpr": 0.951,
+    "chunk_roc_auc": 0.5055,
+    "chunk_pr_auc": 0.6262
+  },
+  "call_level": {
+    "call_f1": 0.9932,
+    "call_precision": 0.9891,
+    "call_recall": 0.9973,
+    "call_fpr": 1.0,
+    "call_roc_auc": 0.4229,
+    "call_pr_auc": 0.9843,
+    "median_ttd_seconds": 45.0
+  }
+}
