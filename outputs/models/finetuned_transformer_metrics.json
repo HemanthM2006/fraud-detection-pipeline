@@ -2,32 +2,32 @@
   "model_name": "Fine-tuned hing-roberta + PCA-30 + LR",
   "pca_dimensions": 30,
   "thresholds": {
-    "tau_review": 0.0593,
-    "tau_alert": 0.0741,
-    "tau_velocity": 0.2396
+    "tau_review": 0.058,
+    "tau_alert": 0.0725,
+    "tau_velocity": 0.233
   },
   "chunk_level": {
-    "chunk_f1": 0.8682,
-    "chunk_precision": 0.8752,
-    "chunk_recall": 0.8613,
-    "chunk_fpr": 0.2187,
-    "chunk_roc_auc": 0.908,
-    "chunk_pr_auc": 0.9534
+    "chunk_f1": 0.8777,
+    "chunk_precision": 0.8844,
+    "chunk_recall": 0.871,
+    "chunk_fpr": 0.2027,
+    "chunk_roc_auc": 0.9054,
+    "chunk_pr_auc": 0.9447
   },
   "call_level": {
-    "call_f1": 0.9692,
-    "call_precision": 0.9904,
-    "call_recall": 0.949,
+    "call_f1": 0.9654,
+    "call_precision": 0.9903,
+    "call_recall": 0.9418,
     "call_fpr": 0.8367,
-    "call_roc_auc": 0.7939,
-    "call_pr_auc": 0.9972,
+    "call_roc_auc": 0.7697,
+    "call_pr_auc": 0.9968,
     "median_ttd_seconds": 48.0
   },
   "extra": {
-    "val_f1_at_tau_alert": 0.8854,
+    "val_f1_at_tau_alert": 0.8975,
     "test_legit_calls": 49.0,
     "test_fraud_calls": 4450.0,
-    "fraud_calls_alerted_pct": 94.8989,
+    "fraud_calls_alerted_pct": 94.1798,
     "median_alert_lead_before_label_flip_sec": 0.0
   }
 }

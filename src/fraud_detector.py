@@ -4,9 +4,7 @@
 #
 # Usage:
 #   from fraud_detector import FraudDetector, CallSession
-#   det = FraudDetector("outputs/models/finetuned_transformer",
-#                       "outputs/models/finetuned_transformer_pca_head.joblib",
-#                       "outputs/models/finetuned_transformer_config.json")
+#   det = FraudDetector("outputs/models/finetuned_transformer_config.json")   # loads every ensemble member listed in the config
 #   call = CallSession(det)
 #   state = call.update(cumulative_text, audio_analysis_json, timestamp_seconds)   # every ~3 s
 #   state["level"] -> "NORMAL" | "REVIEW" | "ALERT"; state["score"] -> P(fraud) of this chunk
@@ -60,9 +58,23 @@ def _number(v):
 
 
 class FraudDetector:
-    def __init__(self, model_dir, head_path, config_path, device=None, batch_size=32):
+    # Ensemble: P(fraud) = mean over members of each member's PCA(<=50)+LR probability.
+    def __init__(self, config_path, device=None, batch_size=32):
+        import os
         with open(config_path, encoding="utf-8") as f:
             self.config = json.load(f)
+        base = os.path.dirname(os.path.abspath(config_path))
+        self.members = [_Member(os.path.join(base, m["weights_dir"]), os.path.join(base, m["head"]), self.config, device, batch_size)
+                        for m in self.config["members"]]
+        self.device = self.members[0].device
+
+    def score(self, texts, audio_jsons, timestamps):
+        return np.mean([m.score(texts, audio_jsons, timestamps) for m in self.members], axis=0)
+
+
+class _Member:
+    def __init__(self, model_dir, head_path, config, device=None, batch_size=32):
+        self.config = config
         self.head = joblib.load(head_path)
         self.device = device or ("cuda:0" if torch.cuda.is_available() else "cpu")
         self.batch_size = batch_size

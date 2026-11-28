@@ -1,23 +1,60 @@
 {
   "model_name": "Fine-tuned hing-roberta + PCA-30 + LR",
   "backbone": "l3cube-pune/hing-roberta",
-  "weights_dir": "outputs/models/finetuned_transformer",
+  "members": [
+    {
+      "seed": 1234,
+      "weights_dir": "finetuned_transformer/seed1234",
+      "head": "finetuned_transformer_pca_head_seed1234.joblib",
+      "n_components": 30,
+      "val_roc_auc": 0.9527023027968464,
+      "pca_grid": [
+        {
+          "n_components": 10,
+          "explained_var": 0.8233274221420288,
+          "val_roc_auc": 0.9479772101550049
+        },
+        {
+          "n_components": 20,
+          "explained_var": 0.8638500571250916,
+          "val_roc_auc": 0.9466936471394469
+        },
+        {
+          "n_components": 30,
+          "explained_var": 0.8877394199371338,
+          "val_roc_auc": 0.9527023027968464
+        },
+        {
+          "n_components": 40,
+          "explained_var": 0.9056732654571533,
+          "val_roc_auc": 0.9503974422389156
+        },
+        {
+          "n_components": 50,
+          "explained_var": 0.919963002204895,
+          "val_roc_auc": 0.9478811987608414
+        }
+      ],
+      "best_ft_val_roc_auc": 0.963337311665083
+    }
+  ],
+  "ensemble_val_roc_auc": 0.9497233084412446,
   "max_len": 512,
   "head_tokens": 128,
   "alert_policy": {
     "alpha": 0.6,
     "k": 1,
-    "tau_alert": 0.0695476402273725,
-    "tau_review": 0.011105030836544426,
+    "tau_alert": 0.012901279403035001,
+    "tau_review": 0.006934633164119179,
     "target_legit_false_alarm": 0.1,
     "review_legit_rate": 0.3,
     "selected_on": "validation"
   },
   "team_protocol_thresholds": {
-    "tau_review": 0.05930751105885473,
-    "tau_alert": 0.0741343888235684,
-    "tau_velocity": 0.2396027462230578,
-    "val_f1": 0.8853527456210661
+    "tau_review": 0.05801742787334324,
+    "tau_alert": 0.07252178484167905,
+    "tau_velocity": 0.23301298381071522,
+    "val_f1": 0.8974766653964583
   },
   "pca_components": 30,
   "n_raw_features": 797,
@@ -43,36 +80,55 @@
   ],
   "pca_grid": [
     {
-      "n_components": 10,
-      "explained_var": 0.8285627365112305,
-      "val_roc_auc": 0.9136791221338276
-    },
-    {
-      "n_components": 20,
-      "explained_var": 0.8735361695289612,
-      "val_roc_auc": 0.9230074526443368
-    },
-    {
-      "n_components": 30,
-      "explained_var": 0.8976128101348877,
-      "val_roc_auc": 0.9327715430901748
-    },
-    {
-      "n_components": 40,
-      "explained_var": 0.9144899845123291,
-      "val_roc_auc": 0.9308486208855521
-    },
-    {
-      "n_components": 50,
-      "explained_var": 0.928146481513977,
-      "val_roc_auc": 0.9311255116641202
+      "seed": 1234,
+      "pca_grid": [
+        {
+          "n_components": 10,
+          "explained_var": 0.8233274221420288,
+          "val_roc_auc": 0.9479772101550049
+        },
+        {
+          "n_components": 20,
+          "explained_var": 0.8638500571250916,
+          "val_roc_auc": 0.9466936471394469
+        },
+        {
+          "n_components": 30,
+          "explained_var": 0.8877394199371338,
+          "val_roc_auc": 0.9527023027968464
+        },
+        {
+          "n_components": 40,
+          "explained_var": 0.9056732654571533,
+          "val_roc_auc": 0.9503974422389156
+        },
+        {
+          "n_components": 50,
+          "explained_var": 0.919963002204895,
+          "val_roc_auc": 0.9478811987608414
+        }
+      ]
     }
   ],
   "training": {
-    "world_size": 2,
-    "train_runtime_sec": 4081.1835,
-    "global_step": 9000,
-    "best_metric": 0.9630118488764559
+    "42": {
+      "world_size": 2,
+      "train_runtime_sec": 5030.4414,
+      "global_step": 9000,
+      "best_metric": 0.9646307294091635
+    },
+    "1234": {
+      "world_size": 2,
+      "train_runtime_sec": 6704.2991,
+      "global_step": 12000,
+      "best_metric": 0.963337311665083
+    },
+    "2024": {
+      "world_size": 2,
+      "train_runtime_sec": 3080.8202,
+      "global_step": 5500,
+      "best_metric": 0.9474000965591292
+    }
   },
   "training_recipe": {
     "lr": 1e-05,
@@ -80,135 +136,165 @@
     "epochs": 1,
     "eval_steps": 500,
     "patience": 6,
-    "train_chunks": 204563,
-    "asr_noise_fraction": 0.3
+    "train_chunks": 251042,
+    "asr_noise_fraction": 0.3,
+    "hard_negative_dup": 1,
+    "seeds": [
+      42,
+      1234,
+      2024
+    ]
   },
   "splits": {
-    "held_out_legit_val_calls": 1026,
-    "held_out_legit_test_calls": 1026
+    "held_out_legit_val_calls": 1014,
+    "held_out_legit_test_calls": 1014
   },
   "deployment": {
     "validation": {
-      "legit_calls": 1075,
-      "scam_calls": 4450,
-      "legit_false_alarm_rate": 0.0995,
+      "clear_normal_calls": 673,
+      "clear_normal_false_alarm_rate": 0.0847,
+      "ambiguous_normal_calls": 341,
+      "ambiguous_normal_false_alarm_rate": 0.129,
+      "legit_calls": 1014,
+      "scam_calls": 4499,
+      "legit_false_alarm_rate": 0.0996,
       "legit_false_alarm_ci95": [
-        0.083,
-        0.1189
+        0.0827,
+        0.1196
       ],
-      "scam_detection_rate": 0.9647,
+      "scam_detection_rate": 0.994,
       "scam_detection_ci95": [
-        0.9589,
-        0.9698
+        0.9913,
+        0.9959
       ],
-      "call_precision": 0.9757,
-      "call_f1": 0.9702,
-      "median_time_to_alert_sec": 42.0,
+      "call_precision": 0.9779,
+      "call_f1": 0.9859,
+      "median_time_to_alert_sec": 33.0,
       "median_alert_lead_vs_label_flip_sec": 0.0,
-      "share_alerts_before_label_flip": 0.2902
+      "share_alerts_before_label_flip": 0.4132
     },
     "test": {
-      "legit_calls": 1075,
-      "scam_calls": 4450,
-      "legit_false_alarm_rate": 0.0837,
+      "clear_normal_calls": 671,
+      "clear_normal_false_alarm_rate": 0.0849,
+      "ambiguous_normal_calls": 343,
+      "ambiguous_normal_false_alarm_rate": 0.1487,
+      "legit_calls": 1014,
+      "scam_calls": 4499,
+      "legit_false_alarm_rate": 0.1065,
       "legit_false_alarm_ci95": [
-        0.0686,
-        0.1018
+        0.089,
+        0.127
       ],
-      "scam_detection_rate": 0.9499,
+      "scam_detection_rate": 0.9704,
       "scam_detection_ci95": [
-        0.9431,
-        0.9559
+        0.9651,
+        0.975
       ],
-      "call_precision": 0.9792,
-      "call_f1": 0.9643,
-      "median_time_to_alert_sec": 42.0,
-      "median_alert_lead_vs_label_flip_sec": 0.0,
-      "share_alerts_before_label_flip": 0.3395
+      "call_precision": 0.9759,
+      "call_f1": 0.9731,
+      "median_time_to_alert_sec": 33.0,
+      "median_alert_lead_vs_label_flip_sec": 6.0,
+      "share_alerts_before_label_flip": 0.5202
     },
     "cross_domain_unseen_scams": {
-      "legit_calls": 51,
-      "scam_calls": 949,
-      "legit_false_alarm_rate": 0.6275,
+      "clear_normal_calls": 0,
+      "clear_normal_false_alarm_rate": NaN,
+      "ambiguous_normal_calls": 0,
+      "ambiguous_normal_false_alarm_rate": NaN,
+      "legit_calls": 0,
+      "scam_calls": 1000,
+      "legit_false_alarm_rate": NaN,
       "legit_false_alarm_ci95": [
-        0.4902,
-        0.7468
+        null,
+        null
       ],
-      "scam_detection_rate": 0.8767,
+      "scam_detection_rate": 0.809,
       "scam_detection_ci95": [
-        0.8543,
-        0.8961
+        0.7835,
+        0.8322
       ],
-      "call_precision": 0.963,
-      "call_f1": 0.9178,
-      "median_time_to_alert_sec": 51.0,
+      "call_precision": 1.0,
+      "call_f1": 0.8944,
+      "median_time_to_alert_sec": 42.0,
       "median_alert_lead_vs_label_flip_sec": 0.0,
-      "share_alerts_before_label_flip": 0.2921
+      "share_alerts_before_label_flip": 0.3078
     },
     "test_asr_noise": {
-      "legit_calls": 1075,
-      "scam_calls": 4450,
-      "legit_false_alarm_rate": 0.133,
+      "clear_normal_calls": 671,
+      "clear_normal_false_alarm_rate": 0.1282,
+      "ambiguous_normal_calls": 343,
+      "ambiguous_normal_false_alarm_rate": 0.2157,
+      "legit_calls": 1014,
+      "scam_calls": 4499,
+      "legit_false_alarm_rate": 0.1578,
       "legit_false_alarm_ci95": [
-        0.114,
-        0.1546
+        0.1366,
+        0.1815
       ],
-      "scam_detection_rate": 0.9798,
+      "scam_detection_rate": 0.9787,
       "scam_detection_ci95": [
-        0.9752,
-        0.9835
+        0.974,
+        0.9825
       ],
-      "call_precision": 0.9682,
-      "call_f1": 0.974,
-      "median_time_to_alert_sec": 39.0,
-      "median_alert_lead_vs_label_flip_sec": 0.0,
-      "share_alerts_before_label_flip": 0.4266
+      "call_precision": 0.9649,
+      "call_f1": 0.9718,
+      "median_time_to_alert_sec": 33.0,
+      "median_alert_lead_vs_label_flip_sec": 6.0,
+      "share_alerts_before_label_flip": 0.5367
     },
     "test_naive_single_chunk_0.5": {
-      "legit_calls": 1075,
-      "scam_calls": 4450,
-      "legit_false_alarm_rate": 0.0372,
+      "clear_normal_calls": 671,
+      "clear_normal_false_alarm_rate": 0.0164,
+      "ambiguous_normal_calls": 343,
+      "ambiguous_normal_false_alarm_rate": 0.0233,
+      "legit_calls": 1014,
+      "scam_calls": 4499,
+      "legit_false_alarm_rate": 0.0187,
       "legit_false_alarm_ci95": [
-        0.0274,
-        0.0503
+        0.012,
+        0.0291
       ],
-      "scam_detection_rate": 0.8276,
+      "scam_detection_rate": 0.8306,
       "scam_detection_ci95": [
-        0.8163,
-        0.8385
+        0.8194,
+        0.8413
       ],
-      "call_precision": 0.9893,
-      "call_f1": 0.9013,
-      "median_time_to_alert_sec": 51.0,
+      "call_precision": 0.9949,
+      "call_f1": 0.9054,
+      "median_time_to_alert_sec": 45.0,
       "median_alert_lead_vs_label_flip_sec": 0.0,
-      "share_alerts_before_label_flip": 0.1127
+      "share_alerts_before_label_flip": 0.1549
     },
     "test_stricter_5pct_policy": {
-      "legit_calls": 1075,
-      "scam_calls": 4450,
-      "legit_false_alarm_rate": 0.0363,
+      "clear_normal_calls": 671,
+      "clear_normal_false_alarm_rate": 0.0417,
+      "ambiguous_normal_calls": 343,
+      "ambiguous_normal_false_alarm_rate": 0.0729,
+      "legit_calls": 1014,
+      "scam_calls": 4499,
+      "legit_false_alarm_rate": 0.0523,
       "legit_false_alarm_ci95": [
-        0.0267,
-        0.0492
+        0.0402,
+        0.0677
       ],
-      "scam_detection_rate": 0.7915,
+      "scam_detection_rate": 0.952,
       "scam_detection_ci95": [
-        0.7793,
-        0.8031
+        0.9453,
+        0.9579
       ],
-      "call_precision": 0.989,
-      "call_f1": 0.8793,
-      "median_time_to_alert_sec": 54.0,
+      "call_precision": 0.9878,
+      "call_f1": 0.9696,
+      "median_time_to_alert_sec": 42.0,
       "median_alert_lead_vs_label_flip_sec": -3.0,
-      "share_alerts_before_label_flip": 0.0866
+      "share_alerts_before_label_flip": 0.381
     }
   },
   "calibration": {
-    "test_chunk_ece": 0.1375,
-    "test_chunk_brier": 0.1357,
-    "test_chunk_roc_auc_all": 0.9332,
-    "test_noisy_chunk_roc_auc_all": 0.9286,
-    "cross_domain_chunk_roc_auc": 0.8601
+    "test_chunk_ece": 0.1274,
+    "test_chunk_brier": 0.1328,
+    "test_chunk_roc_auc_all": 0.9318,
+    "test_noisy_chunk_roc_auc_all": 0.9295,
+    "cross_domain_chunk_roc_auc": 0.8387
   },
   "inputs": [
     "cumulative_text",
@@ -220,8 +306,8 @@
   "smoke": false,
   "latency": {
     "device": "cuda:0",
-    "p50_ms": 11.6,
-    "p95_ms": 12.7,
-    "cpu_p50_ms": 88.1
+    "p50_ms": 10.8,
+    "p95_ms": 12.8,
+    "cpu_p50_ms": 84.0
   }
 }
