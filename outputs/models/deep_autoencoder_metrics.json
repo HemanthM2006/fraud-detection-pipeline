@@ -1,0 +1,26 @@
+{
+  "model_name": "Deep Autoencoder",
+  "pca_dimensions": 40,
+  "thresholds": {
+    "tau_review": 0.0222,
+    "tau_alert": 0.0278,
+    "tau_velocity": 0.117
+  },
+  "chunk_level": {
+    "chunk_f1": 0.7679,
+    "chunk_precision": 0.6433,
+    "chunk_recall": 0.9524,
+    "chunk_fpr": 0.9404,
+    "chunk_roc_auc": 0.5115,
+    "chunk_pr_auc": 0.6369
+  },
+  "call_level": {
+    "call_f1": 0.989,
+    "call_precision": 0.989,
+    "call_recall": 0.989,
+    "call_fpr": 1.0,
+    "call_roc_auc": 0.415,
+    "call_pr_auc": 0.9843,
+    "median_ttd_seconds": 45.0
+  }
+}
