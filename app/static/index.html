@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scam Call Guard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <h1>Scam Call Guard</h1>
+  <p class="sub">Real-time Hinglish phone-scam detection · fine-tuned HingRoBERTa ensemble · updates every 3 seconds</p>
+  <span id="status" class="pill">Loading model…</span>
+</header>
+
+<main>
+  <section class="card verdict-card">
+    <div id="verdict" class="verdict NORMAL">
+      <div class="level" id="level">WAITING</div>
+      <div class="msg" id="msg">Start a call, type lines, or replay a real test call.</div>
+      <ul class="reasons" id="reasons"></ul>
+    </div>
+    <div class="meter-wrap">
+      <div class="meter-label"><span>Risk</span><span id="riskText">–</span></div>
+      <div class="meter"><div id="meterFill"></div><div id="meterReview" class="tick"></div><div class="tick alert" style="left:100%"></div></div>
+      <div class="meter-legend"><span>safe</span><span>review</span><span>alert</span></div>
+    </div>
+    <svg id="chart" viewBox="0 0 600 140" preserveAspectRatio="none" aria-label="Risk over time"></svg>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="card">
+    <div class="tabs">
+      <button class="tab active" data-tab="live">🎙️ Live mic</button>
+      <button class="tab" data-tab="type">⌨️ Type lines</button>
+      <button class="tab" data-tab="replay">▶️ Replay real call</button>
+    </div>
+
+    <div class="tabpane" id="tab-live">
+      <p class="hint">Chrome / Edge only. Speech is transcribed by the browser's online speech service (Indian English, works for Roman Hinglish). Pick who is speaking.</p>
+      <div class="row">
+        <button id="micBtn" class="primary">Start call</button>
+        <div class="toggle">
+          <button class="spk active" data-spk="Agent">Caller speaking</button>
+          <button class="spk" data-spk="Customer">I'm speaking</button>
+        </div>
+      </div>
+      <div id="interim" class="interim"></div>
+    </div>
+
+    <div class="tabpane hidden" id="tab-type">
+      <p class="hint">Type what was said and add it as the caller or as you. Each line is scored as the next 3-second chunk.</p>
+      <textarea id="lineInput" rows="2" placeholder="e.g. Sir aapka account block ho jayega, abhi OTP batao"></textarea>
+      <div class="row">
+        <button id="addCaller" class="primary">Add as caller</button>
+        <button id="addMe">Add as me</button>
+        <button id="resetBtn" class="ghost">New call</button>
+      </div>
+    </div>
+
+    <div class="tabpane hidden" id="tab-replay">
+      <p class="hint">Held-out calls from the local ICFD-31k copy, never used for training. Replayed 5× faster than real time, chunk by chunk.</p>
+      <div class="row">
+        <select id="sampleSel"></select>
+        <button id="replayBtn" class="primary">Replay</button>
+      </div>
+      <div id="truth" class="truth hidden"></div>
+    </div>
+
+    <div class="row policy">
+      <label>Alert setting
+        <select id="policySel">
+          <option value="strict" selected>Strict (≈5 % false alarms)</option>
+          <option value="default">Default (≈10 % false alarms, faster)</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Transcript</h2>
+    <div id="transcript" class="transcript"><p class="empty">Nothing yet.</p></div>
+  </section>
+</main>
+
+<footer>
+  Research prototype (Review 2). Flags suspicious behaviour; it is not proof of fraud. Never share OTP, PIN, CVV or passwords on a call.
+</footer>
+<script src="/static/app.js"></script>
+</body>
+</html>

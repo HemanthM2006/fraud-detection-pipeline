@@ -1,0 +1,129 @@
+{
+  "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "method": "max cosine similarity to intent examples minus max similarity to normal examples",
+  "thresholds": {
+    "I1_secret_intent": 0.22,
+    "I2_remote_intent": 0.14,
+    "I3_unusual_payment_intent": 0.18,
+    "I4_money_intent": 0.23,
+    "I5_threat_intent": 0.23,
+    "I6_details_intent": 0.25
+  },
+  "calibration_validation": {
+    "I1_secret_intent": {
+      "level": "REVIEW",
+      "threshold": 0.22,
+      "target_val_false_alarm": 0.05,
+      "val_false_alarm": 0.0493,
+      "val_scam_hit_rate": 0.195
+    },
+    "I2_remote_intent": {
+      "level": "REVIEW",
+      "threshold": 0.14,
+      "target_val_false_alarm": 0.05,
+      "val_false_alarm": 0.0414,
+      "val_scam_hit_rate": 0.1475
+    },
+    "I3_unusual_payment_intent": {
+      "level": "REVIEW",
+      "threshold": 0.18,
+      "target_val_false_alarm": 0.05,
+      "val_false_alarm": 0.0454,
+      "val_scam_hit_rate": 0.2425
+    },
+    "I4_money_intent": {
+      "level": "REVIEW",
+      "threshold": 0.23,
+      "target_val_false_alarm": 0.05,
+      "val_false_alarm": 0.0414,
+      "val_scam_hit_rate": 0.2025
+    },
+    "I5_threat_intent": {
+      "level": "REVIEW",
+      "threshold": 0.23,
+      "target_val_false_alarm": 0.05,
+      "val_false_alarm": 0.0483,
+      "val_scam_hit_rate": 0.2
+    },
+    "I6_details_intent": {
+      "level": "REVIEW",
+      "threshold": 0.25,
+      "target_val_false_alarm": 0.05,
+      "val_false_alarm": 0.0454,
+      "val_scam_hit_rate": 0.1475
+    }
+  },
+  "test_report": {
+    "test_normal": {
+      "rules_only": 0.0089,
+      "intents_only": 0.2249,
+      "rules_plus_intents": 0.2268,
+      "rules_plus_intents_ambiguous_normal": 0.2886,
+      "rules_plus_intents_clear_normal": 0.1952
+    },
+    "test_scam": {
+      "rules_only": 0.2,
+      "rules_only_median_alert_lead_vs_flip_s": -12.0,
+      "intents_only": 0.645,
+      "intents_only_median_alert_lead_vs_flip_s": 0.0,
+      "rules_plus_intents": 0.665,
+      "rules_plus_intents_median_alert_lead_vs_flip_s": 0.0
+    },
+    "cross_scam": {
+      "rules_only": 0.1067,
+      "rules_only_median_alert_lead_vs_flip_s": -18.0,
+      "intents_only": 0.45,
+      "intents_only_median_alert_lead_vs_flip_s": 0.0,
+      "rules_plus_intents": 0.48,
+      "rules_plus_intents_median_alert_lead_vs_flip_s": -3.0
+    }
+  },
+  "examples": [
+    {
+      "text": "Hello Can I get your bank account number please I'm a scam caller so can I get credit card details",
+      "hits": [
+        [
+          "I1_secret_intent",
+          0.335
+        ]
+      ]
+    },
+    {
+      "text": "woh 6 digit wala number jo SMS mein aaya hai, mujhe bol do jaldi",
+      "hits": []
+    },
+    {
+      "text": "Sir aapke card ke peeche jo teen number likhe hain woh padh ke sunaiye",
+      "hits": []
+    },
+    {
+      "text": "Please install this app from the link I sent, then I can see your screen and fix it",
+      "hits": [
+        [
+          "I2_remote_intent",
+          0.399
+        ]
+      ]
+    },
+    {
+      "text": "Sir aapka parcel kal deliver hoga, delivery boy ko OTP dikha dena",
+      "hits": []
+    },
+    {
+      "text": "Your order has been shipped and will arrive on Monday",
+      "hits": []
+    },
+    {
+      "text": "Agar abhi payment nahi kiya toh police aapke ghar aa jayegi",
+      "hits": []
+    }
+  ],
+  "sizes": {
+    "val_normal": 1014,
+    "val_scam": 400,
+    "test_normal": 1014,
+    "test_scam": 400,
+    "cross_scam": 300
+  },
+  "note": "Thresholds chosen on validation calls only; call-level false alarm = any caller turn above threshold."
+}

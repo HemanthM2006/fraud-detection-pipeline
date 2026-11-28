@@ -143,9 +143,22 @@ class _Member:
 
 
 class CallSession:
-    def __init__(self, detector, policy=None):
+    # use_rules=True adds the transparent IF-THEN safety rules (src/scam_rules.py): a caller asking for an
+    # OTP / PIN / CVV / password, a remote-access app or gift cards raises ALERT at once; detail requests,
+    # payment demands and threats raise REVIEW. Rules can only raise the level, never lower the model's.
+    def __init__(self, detector, policy=None, use_rules=True, intent_checker=None):
         p = dict(policy or detector.config["alert_policy"])
         self.detector = detector
+        self.rules = None
+        if use_rules:
+            try:
+                import scam_rules
+                self.rules = scam_rules
+            except ImportError:
+                self.rules = None
+        # Optional zero-shot intent checker (src/intent_checker.py): checks each NEW caller turn for
+        # credential / remote-access / money / threat requests, whatever the wording.
+        self.intents = intent_checker if self.rules is not None else None
         self.alpha, self.k = float(p["alpha"]), int(p["k"])
         self.tau_alert, self.tau_review = float(p["tau_alert"]), float(p["tau_review"])
         self.reset()
@@ -153,6 +166,7 @@ class CallSession:
     def reset(self):
         self.ema, self.window = None, deque(maxlen=self.k)
         self.alerted, self.first_alert_ts, self.history = False, None, []
+        self.alert_source, self.rule_hits, self._seen_turns = None, [], {}
 
     def update_score(self, score, timestamp):
         score = float(score)
@@ -160,7 +174,7 @@ class CallSession:
         self.ema = score if prev is None else self.alpha * score + (1.0 - self.alpha) * prev
         self.window.append(self.ema)
         if not self.alerted and len(self.window) == self.k and min(self.window) >= self.tau_alert:
-            self.alerted, self.first_alert_ts = True, float(timestamp)
+            self.alerted, self.first_alert_ts, self.alert_source = True, float(timestamp), "model"
         level = "ALERT" if self.alerted else ("REVIEW" if self.ema >= self.tau_review else "NORMAL")
         state = {"timestamp": float(timestamp), "score": score, "smoothed_score": self.ema,
                  "risk_velocity": 0.0 if prev is None else self.ema - prev, "level": level,
@@ -169,4 +183,30 @@ class CallSession:
         return state
 
     def update(self, cumulative_text, audio_json, timestamp):
-        return self.update_score(self.detector.score([cumulative_text], [audio_json], [timestamp])[0], timestamp)
+        state = self.update_score(self.detector.score([cumulative_text], [audio_json], [timestamp])[0], timestamp)
+        return self.apply_rules(state, cumulative_text) if self.rules else state
+
+    def apply_rules(self, state, cumulative_text):
+        state["model_level"] = state["level"]            # what the ML model alone says
+        hits = self.rules.evaluate(cumulative_text)
+        if self.intents is not None:
+            turns = self.rules.caller_lines(cumulative_text)
+            new = [t for k, t in enumerate(turns) if self._seen_turns.get(k) != t]
+            self._seen_turns.update(dict(enumerate(turns)))
+            if new:
+                hits = hits + self.intents.check(new)
+        for h in hits:                                   # remember every rule that ever fired in this call
+            if all(h["rule"] != r["rule"] for r in self.rule_hits):
+                self.rule_hits.append({**h, "timestamp": state["timestamp"]})
+        rule_level = self.rules.level_of(self.rule_hits)
+        if rule_level == "ALERT" and not self.alerted:
+            first = next(h for h in self.rule_hits if h["level"] == "ALERT")
+            self.alerted, self.first_alert_ts = True, state["timestamp"]
+            self.alert_source = "intent" if first["rule"].startswith("I") else "rules"
+        if self.alerted:
+            state["level"] = "ALERT"
+        elif rule_level == "REVIEW" and state["level"] == "NORMAL":
+            state["level"] = "REVIEW"
+        state.update({"alerted": self.alerted, "first_alert_ts": self.first_alert_ts, "alert_source": self.alert_source,
+                      "rule_hits": list(self.rule_hits)})
+        return state
