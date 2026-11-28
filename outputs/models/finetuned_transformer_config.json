@@ -1,5 +1,5 @@
 {
-  "model_name": "Fine-tuned hing-roberta + PCA-30 + LR",
+  "model_name": "Ensemble of 3 fine-tuned hing-roberta + PCA(<=50) + LR",
   "backbone": "l3cube-pune/hing-roberta",
   "members": [
     {
@@ -35,26 +35,104 @@
           "val_roc_auc": 0.9478811987608414
         }
       ],
-      "best_ft_val_roc_auc": 0.963337311665083
+      "best_ft_val_roc_auc": null
+    },
+    {
+      "seed": 777,
+      "weights_dir": "finetuned_transformer/seed777",
+      "head": "finetuned_transformer_pca_head_seed777.joblib",
+      "n_components": 20,
+      "val_roc_auc": 0.9550685257445112,
+      "pca_grid": [
+        {
+          "n_components": 10,
+          "explained_var": 0.8421395421028137,
+          "val_roc_auc": 0.9342479924113083
+        },
+        {
+          "n_components": 20,
+          "explained_var": 0.8835815191268921,
+          "val_roc_auc": 0.9550685257445112
+        },
+        {
+          "n_components": 30,
+          "explained_var": 0.9054659605026245,
+          "val_roc_auc": 0.9553242354634539
+        },
+        {
+          "n_components": 40,
+          "explained_var": 0.9217602610588074,
+          "val_roc_auc": 0.955417192679697
+        },
+        {
+          "n_components": 50,
+          "explained_var": 0.9351574182510376,
+          "val_roc_auc": 0.9552367770736018
+        }
+      ],
+      "best_ft_val_roc_auc": 0.9633692076114011
+    },
+    {
+      "seed": 3407,
+      "weights_dir": "finetuned_transformer/seed3407",
+      "head": "finetuned_transformer_pca_head_seed3407.joblib",
+      "n_components": 20,
+      "val_roc_auc": 0.9554688464199991,
+      "pca_grid": [
+        {
+          "n_components": 10,
+          "explained_var": 0.8405877351760864,
+          "val_roc_auc": 0.9541622041965081
+        },
+        {
+          "n_components": 20,
+          "explained_var": 0.878795862197876,
+          "val_roc_auc": 0.9554688464199991
+        },
+        {
+          "n_components": 30,
+          "explained_var": 0.9013519883155823,
+          "val_roc_auc": 0.9500249419450741
+        },
+        {
+          "n_components": 40,
+          "explained_var": 0.9176532030105591,
+          "val_roc_auc": 0.9504709650251097
+        },
+        {
+          "n_components": 50,
+          "explained_var": 0.9310685396194458,
+          "val_roc_auc": 0.9488488460700231
+        }
+      ],
+      "best_ft_val_roc_auc": 0.9635549100972762
     }
   ],
-  "ensemble_val_roc_auc": 0.9497233084412446,
+  "ensemble_val_roc_auc": 0.961635324868704,
   "max_len": 512,
   "head_tokens": 128,
   "alert_policy": {
-    "alpha": 0.6,
+    "alpha": 0.3,
     "k": 1,
-    "tau_alert": 0.012901279403035001,
-    "tau_review": 0.006934633164119179,
+    "tau_alert": 0.014039007406185425,
+    "tau_review": 0.00635127974670622,
     "target_legit_false_alarm": 0.1,
     "review_legit_rate": 0.3,
     "selected_on": "validation"
   },
+  "alert_policy_strict": {
+    "alpha": 0.6,
+    "k": 2,
+    "tau_alert": 0.05107579684033604,
+    "tau_review": 0.00635127974670622,
+    "target_legit_false_alarm": 0.05,
+    "selected_on": "validation"
+  },
   "team_protocol_thresholds": {
-    "tau_review": 0.05801742787334324,
-    "tau_alert": 0.07252178484167905,
-    "tau_velocity": 0.23301298381071522,
-    "val_f1": 0.8974766653964583
+    "tau_review": 0.0528724090417683,
+    "tau_alert": 0.06609051130221037,
+    "tau_velocity": 0.2314724111972575,
+    "val_f1": 0.9071678862207565
   },
   "pca_components": 30,
   "n_raw_features": 797,
@@ -108,26 +186,80 @@
           "val_roc_auc": 0.9478811987608414
         }
       ]
+    },
+    {
+      "seed": 777,
+      "pca_grid": [
+        {
+          "n_components": 10,
+          "explained_var": 0.8421395421028137,
+          "val_roc_auc": 0.9342479924113083
+        },
+        {
+          "n_components": 20,
+          "explained_var": 0.8835815191268921,
+          "val_roc_auc": 0.9550685257445112
+        },
+        {
+          "n_components": 30,
+          "explained_var": 0.9054659605026245,
+          "val_roc_auc": 0.9553242354634539
+        },
+        {
+          "n_components": 40,
+          "explained_var": 0.9217602610588074,
+          "val_roc_auc": 0.955417192679697
+        },
+        {
+          "n_components": 50,
+          "explained_var": 0.9351574182510376,
+          "val_roc_auc": 0.9552367770736018
+        }
+      ]
+    },
+    {
+      "seed": 3407,
+      "pca_grid": [
+        {
+          "n_components": 10,
+          "explained_var": 0.8405877351760864,
+          "val_roc_auc": 0.9541622041965081
+        },
+        {
+          "n_components": 20,
+          "explained_var": 0.878795862197876,
+          "val_roc_auc": 0.9554688464199991
+        },
+        {
+          "n_components": 30,
+          "explained_var": 0.9013519883155823,
+          "val_roc_auc": 0.9500249419450741
+        },
+        {
+          "n_components": 40,
+          "explained_var": 0.9176532030105591,
+          "val_roc_auc": 0.9504709650251097
+        },
+        {
+          "n_components": 50,
+          "explained_var": 0.9310685396194458,
+          "val_roc_auc": 0.9488488460700231
+        }
+      ]
     }
   ],
   "training": {
-    "42": {
+    "777": {
       "world_size": 2,
-      "train_runtime_sec": 5030.4414,
-      "global_step": 9000,
-      "best_metric": 0.9646307294091635
+      "train_runtime_sec": 6100.1995,
+      "global_step": 13500,
+      "best_metric": 0.9633692076114011
     },
-    "1234": {
+    "3407": {
       "world_size": 2,
-      "train_runtime_sec": 6704.2991,
-      "global_step": 12000,
-      "best_metric": 0.963337311665083
-    },
-    "2024": {
-      "world_size": 2,
-      "train_runtime_sec": 3080.8202,
-      "global_step": 5500,
-      "best_metric": 0.9474000965591292
+      "train_runtime_sec": 4969.7155,
+      "global_step": 11000,
+      "best_metric": 0.9635549100972762
     }
   },
   "training_recipe": {
@@ -142,7 +274,8 @@
     "seeds": [
       42,
       1234,
-      2024
+      777,
+      3407
     ]
   },
   "splits": {
@@ -154,47 +287,47 @@
       "clear_normal_calls": 673,
       "clear_normal_false_alarm_rate": 0.0847,
       "ambiguous_normal_calls": 341,
-      "ambiguous_normal_false_alarm_rate": 0.129,
+      "ambiguous_normal_false_alarm_rate": 0.1173,
       "legit_calls": 1014,
       "scam_calls": 4499,
-      "legit_false_alarm_rate": 0.0996,
+      "legit_false_alarm_rate": 0.0957,
       "legit_false_alarm_ci95": [
-        0.0827,
-        0.1196
+        0.0791,
+        0.1153
       ],
-      "scam_detection_rate": 0.994,
+      "scam_detection_rate": 0.9947,
       "scam_detection_ci95": [
-        0.9913,
-        0.9959
+        0.9921,
+        0.9964
       ],
-      "call_precision": 0.9779,
-      "call_f1": 0.9859,
-      "median_time_to_alert_sec": 33.0,
+      "call_precision": 0.9788,
+      "call_f1": 0.9867,
+      "median_time_to_alert_sec": 36.0,
       "median_alert_lead_vs_label_flip_sec": 0.0,
-      "share_alerts_before_label_flip": 0.4132
+      "share_alerts_before_label_flip": 0.3886
     },
     "test": {
       "clear_normal_calls": 671,
-      "clear_normal_false_alarm_rate": 0.0849,
+      "clear_normal_false_alarm_rate": 0.073,
       "ambiguous_normal_calls": 343,
-      "ambiguous_normal_false_alarm_rate": 0.1487,
+      "ambiguous_normal_false_alarm_rate": 0.1399,
       "legit_calls": 1014,
       "scam_calls": 4499,
-      "legit_false_alarm_rate": 0.1065,
+      "legit_false_alarm_rate": 0.0957,
       "legit_false_alarm_ci95": [
-        0.089,
-        0.127
+        0.0791,
+        0.1153
       ],
-      "scam_detection_rate": 0.9704,
+      "scam_detection_rate": 0.9907,
       "scam_detection_ci95": [
-        0.9651,
-        0.975
+        0.9874,
+        0.9931
       ],
-      "call_precision": 0.9759,
-      "call_f1": 0.9731,
-      "median_time_to_alert_sec": 33.0,
-      "median_alert_lead_vs_label_flip_sec": 6.0,
-      "share_alerts_before_label_flip": 0.5202
+      "call_precision": 0.9787,
+      "call_f1": 0.9846,
+      "median_time_to_alert_sec": 36.0,
+      "median_alert_lead_vs_label_flip_sec": 0.0,
+      "share_alerts_before_label_flip": 0.4766
     },
     "cross_domain_unseen_scams": {
       "clear_normal_calls": 0,
@@ -208,93 +341,93 @@
         null,
         null
       ],
-      "scam_detection_rate": 0.809,
+      "scam_detection_rate": 0.936,
       "scam_detection_ci95": [
-        0.7835,
-        0.8322
+        0.9191,
+        0.9496
       ],
       "call_precision": 1.0,
-      "call_f1": 0.8944,
-      "median_time_to_alert_sec": 42.0,
+      "call_f1": 0.9669,
+      "median_time_to_alert_sec": 51.0,
       "median_alert_lead_vs_label_flip_sec": 0.0,
-      "share_alerts_before_label_flip": 0.3078
+      "share_alerts_before_label_flip": 0.3333
     },
     "test_asr_noise": {
       "clear_normal_calls": 671,
-      "clear_normal_false_alarm_rate": 0.1282,
+      "clear_normal_false_alarm_rate": 0.1058,
       "ambiguous_normal_calls": 343,
-      "ambiguous_normal_false_alarm_rate": 0.2157,
+      "ambiguous_normal_false_alarm_rate": 0.2187,
       "legit_calls": 1014,
       "scam_calls": 4499,
-      "legit_false_alarm_rate": 0.1578,
+      "legit_false_alarm_rate": 0.144,
       "legit_false_alarm_ci95": [
-        0.1366,
-        0.1815
+        0.1237,
+        0.1669
       ],
-      "scam_detection_rate": 0.9787,
+      "scam_detection_rate": 0.9927,
       "scam_detection_ci95": [
-        0.974,
-        0.9825
+        0.9897,
+        0.9948
       ],
-      "call_precision": 0.9649,
-      "call_f1": 0.9718,
-      "median_time_to_alert_sec": 33.0,
-      "median_alert_lead_vs_label_flip_sec": 6.0,
-      "share_alerts_before_label_flip": 0.5367
+      "call_precision": 0.9683,
+      "call_f1": 0.9804,
+      "median_time_to_alert_sec": 36.0,
+      "median_alert_lead_vs_label_flip_sec": 3.0,
+      "share_alerts_before_label_flip": 0.5
     },
     "test_naive_single_chunk_0.5": {
       "clear_normal_calls": 671,
-      "clear_normal_false_alarm_rate": 0.0164,
+      "clear_normal_false_alarm_rate": 0.0104,
       "ambiguous_normal_calls": 343,
-      "ambiguous_normal_false_alarm_rate": 0.0233,
+      "ambiguous_normal_false_alarm_rate": 0.0204,
       "legit_calls": 1014,
       "scam_calls": 4499,
-      "legit_false_alarm_rate": 0.0187,
+      "legit_false_alarm_rate": 0.0138,
       "legit_false_alarm_ci95": [
-        0.012,
-        0.0291
+        0.0082,
+        0.023
       ],
-      "scam_detection_rate": 0.8306,
+      "scam_detection_rate": 0.8375,
       "scam_detection_ci95": [
-        0.8194,
-        0.8413
+        0.8265,
+        0.848
       ],
-      "call_precision": 0.9949,
-      "call_f1": 0.9054,
-      "median_time_to_alert_sec": 45.0,
+      "call_precision": 0.9963,
+      "call_f1": 0.91,
+      "median_time_to_alert_sec": 48.0,
       "median_alert_lead_vs_label_flip_sec": 0.0,
-      "share_alerts_before_label_flip": 0.1549
+      "share_alerts_before_label_flip": 0.1064
     },
     "test_stricter_5pct_policy": {
       "clear_normal_calls": 671,
-      "clear_normal_false_alarm_rate": 0.0417,
+      "clear_normal_false_alarm_rate": 0.0447,
       "ambiguous_normal_calls": 343,
-      "ambiguous_normal_false_alarm_rate": 0.0729,
+      "ambiguous_normal_false_alarm_rate": 0.0787,
       "legit_calls": 1014,
       "scam_calls": 4499,
-      "legit_false_alarm_rate": 0.0523,
+      "legit_false_alarm_rate": 0.0562,
       "legit_false_alarm_ci95": [
-        0.0402,
-        0.0677
+        0.0436,
+        0.0721
       ],
-      "scam_detection_rate": 0.952,
+      "scam_detection_rate": 0.9702,
       "scam_detection_ci95": [
-        0.9453,
-        0.9579
+        0.9648,
+        0.9748
       ],
-      "call_precision": 0.9878,
-      "call_f1": 0.9696,
-      "median_time_to_alert_sec": 42.0,
+      "call_precision": 0.9871,
+      "call_f1": 0.9786,
+      "median_time_to_alert_sec": 45.0,
       "median_alert_lead_vs_label_flip_sec": -3.0,
-      "share_alerts_before_label_flip": 0.381
+      "share_alerts_before_label_flip": 0.3251
     }
   },
   "calibration": {
-    "test_chunk_ece": 0.1274,
-    "test_chunk_brier": 0.1328,
-    "test_chunk_roc_auc_all": 0.9318,
-    "test_noisy_chunk_roc_auc_all": 0.9295,
-    "cross_domain_chunk_roc_auc": 0.8387
+    "test_chunk_ece": 0.1295,
+    "test_chunk_brier": 0.1181,
+    "test_chunk_roc_auc_all": 0.955,
+    "test_noisy_chunk_roc_auc_all": 0.952,
+    "cross_domain_chunk_roc_auc": 0.8801
   },
   "inputs": [
     "cumulative_text",
@@ -306,8 +439,8 @@
   "smoke": false,
   "latency": {
     "device": "cuda:0",
-    "p50_ms": 10.8,
-    "p95_ms": 12.8,
-    "cpu_p50_ms": 84.0
+    "p50_ms": 35.6,
+    "p95_ms": 37.2,
+    "cpu_p50_ms": 264.7
   }
 }
