@@ -4,7 +4,7 @@
 #
 # Usage:
 #   from fraud_detector import FraudDetector, CallSession
-#   det = FraudDetector("outputs/models/finetuned_transformer_config.json")   # loads every ensemble member listed in the config
+#   det = FraudDetector("outputs/models/hinglish_transformer_ensemble/finetuned_transformer_config.json")   # loads every ensemble member listed in the config
 #   call = CallSession(det)
 #   state = call.update(cumulative_text, audio_analysis_json, timestamp_seconds)   # every ~3 s
 #   state["level"] -> "NORMAL" | "REVIEW" | "ALERT"; state["score"] -> P(fraud) of this chunk
