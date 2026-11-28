@@ -4,8 +4,8 @@
   "members": [
     {
       "seed": 1234,
-      "weights_dir": "finetuned_transformer/seed1234",
-      "head": "finetuned_transformer_pca_head_seed1234.joblib",
+      "weights_dir": "weights/seed1234",
+      "head": "pca_heads/finetuned_transformer_pca_head_seed1234.joblib",
       "n_components": 30,
       "val_roc_auc": 0.9527023027968464,
       "pca_grid": [
@@ -39,8 +39,8 @@
     },
     {
       "seed": 777,
-      "weights_dir": "finetuned_transformer/seed777",
-      "head": "finetuned_transformer_pca_head_seed777.joblib",
+      "weights_dir": "weights/seed777",
+      "head": "pca_heads/finetuned_transformer_pca_head_seed777.joblib",
       "n_components": 20,
       "val_roc_auc": 0.9550685257445112,
       "pca_grid": [
@@ -74,8 +74,8 @@
     },
     {
       "seed": 3407,
-      "weights_dir": "finetuned_transformer/seed3407",
-      "head": "finetuned_transformer_pca_head_seed3407.joblib",
+      "weights_dir": "weights/seed3407",
+      "head": "pca_heads/finetuned_transformer_pca_head_seed3407.joblib",
       "n_components": 20,
       "val_roc_auc": 0.9554688464199991,
       "pca_grid": [
