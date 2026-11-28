@@ -1,0 +1,26 @@
+{
+  "model_name": "One-Class SVM",
+  "pca_dimensions": 40,
+  "thresholds": {
+    "tau_review": 0.1524,
+    "tau_alert": 0.1905,
+    "tau_velocity": 0.0854
+  },
+  "chunk_level": {
+    "chunk_f1": 0.7743,
+    "chunk_precision": 0.6449,
+    "chunk_recall": 0.9685,
+    "chunk_fpr": 0.9496,
+    "chunk_roc_auc": 0.5244,
+    "chunk_pr_auc": 0.6348
+  },
+  "call_level": {
+    "call_f1": 0.9933,
+    "call_precision": 0.9891,
+    "call_recall": 0.9975,
+    "call_fpr": 1.0,
+    "call_roc_auc": 0.4271,
+    "call_pr_auc": 0.9853,
+    "median_ttd_seconds": 45.0
+  }
+}
