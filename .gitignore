@@ -23,3 +23,9 @@ Thumbs.db
 # Allow small trained models saved inside outputs/models/
 !outputs/models/*.pth
 !outputs/models/*.joblib
+
+# Fine-tuned transformer weights are ~0.5 GB (over GitHub's 100 MB limit):
+# kept as Kaggle notebook output + local copy, never committed
+outputs/models/finetuned_transformer/
+*.safetensors
+*.bin
